@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Home" %}</li>
+{% endblock %}
+
+{% block main %}
+
+
+
+   <!-- masonry
+   ================================================== -->
+<section id="bricks">
+
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+
+            {% for blog_post in blog_posts %}
+            <article class="brick entry format-standard animate-this">
+
+            	{% if blog_post.featured_image %}
+            	<div class="entry-thumb">
+               	
+                  <a href="{{ blog_post.get_absolute_url }}" class="thumb-link">
+                      <img src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 90 90 %}">             
+                  </a>
+               </div>
+               {% endif %}
+
+               <div class="entry-text">
+                <div class="entry-header">
+
+                    <div class="entry-meta">
+                        <span class="cat-links">
+                        	{% with blog_post.categories.all as categories %}
+						    {% if categories %}
+						    {% for category in categories %}
+						    <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
+						    {% endfor %}
+						    {% endif %}
+						    {% endwith %}                                                       
+                        </span>         
+                    </div>
+
+                    <h1 class="entry-title"><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h1>
+                    
+                </div>
+                        <div class="entry-excerpt">
+                            {{ blog_post.description_from_content|safe }}
+                        </div>
+               </div>
+
+                </article> <!-- end article -->
+            {% endfor %}
+                
+           
+
+
+
+         </div> <!-- end brick-wrapper --> 
+
+    </div> <!-- end row -->
+</section> <!-- end bricks -->
+{% endblock %}

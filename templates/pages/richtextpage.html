@@ -1,0 +1,34 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags %}
+
+
+<section id="bricks">
+
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+
+            <article class="brick entry format-standard animate-this">
+
+
+               <div class="entry-text">                
+                	<div class="entry-excerpt">
+                    	{% block main %}{{ block.super }}
+
+						{% editable page.richtextpage.content %}
+						{{ page.richtextpage.content|richtext_filters|safe }}
+						{% endeditable %}
+
+						{% endblock %}
+                	</div>
+               </div>
+
+            </article> <!-- end article -->
+         </div> <!-- end brick-wrapper --> 
+
+    </div> <!-- end row -->
+</section> <!-- end bricks -->
